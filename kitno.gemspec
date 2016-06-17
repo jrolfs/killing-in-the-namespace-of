@@ -9,8 +9,8 @@ require 'kitno/version'
 Gem::Specification.new do |spec|
   spec.name          = 'kitno'
   spec.version       = Kitno::VERSION
-  spec.authors       = ['Jamie Rolfs']
-  spec.email         = ['jamie@mavenlink.com', 'alan@mavenlink.com']
+  spec.authors       = ['Jamie Rolfs', 'Alan Wong', 'Cassandra Cruz']
+  spec.email         = ['jamie.rolfs@gmail.com', 'alan@mavenlink.com', 'celkamada@gmail.com']
 
   spec.summary       = 'Convert projects that use JavaScript namespace module structures to CommonJS'
   spec.description   = ''
