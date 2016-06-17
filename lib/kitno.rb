@@ -3,6 +3,7 @@ require 'kitno/cli'
 
 require 'find'
 require 'fileutils'
+require 'awesome_print'
 
 module Kitno
   class KillingInTheNamespaceOf
@@ -33,7 +34,7 @@ module Kitno
     def enumerate
       enumerate_files
 
-      puts @class_map.to_s
+      ap @class_map
     end
 
     private
