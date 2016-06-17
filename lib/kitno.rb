@@ -8,7 +8,7 @@ require 'awesome_print'
 module Kitno
   class KillingInTheNamespaceOf
     CLASS_EXPRESSION = /^class\s(?:@)?([A-Z][\w\.]*)/
-    REQUIRE_TEMPLATE = "%{short_name} = require '%{path}'"
+    REQUIRE_TEMPLATE = "%{short_name} = require('%{path}')"
 
     def initialize(options = {})
       @namespace, @directory, globals = options.values_at(:namespace, :directory, :globals)
