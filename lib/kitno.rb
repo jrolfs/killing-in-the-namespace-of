@@ -11,10 +11,12 @@ module Kitno
     REQUIRE_TEMPLATE = "%{short_name} = require '%{path}'"
 
     def initialize(options = {})
-      @namespace, @directory = options.values_at(:namespace, :directory)
+      @namespace, @directory, globals = options.values_at(:namespace, :directory, :globals)
 
       @class_map = {}
       @files = []
+
+      parse_globals(globals) if globals && globals.length > 0
 
       @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
     end
@@ -64,6 +66,16 @@ module Kitno
       end
     end
 
+    def parse_globals(global_mappings)
+      mappings = global_mappings.split(',')
+
+      @globals = mappings.reduce({}) do |map, mapping|
+        constructor, dependency = mapping.split(':')
+        map[constructor] = dependency
+        map
+      end
+    end
+
     def parse_class_name(contents)
       match = CLASS_EXPRESSION.match(contents)
 
@@ -71,7 +83,15 @@ module Kitno
     end
 
     def parse_dependencies(contents)
-      contents.scan(@dependency_expression).flatten.compact
+      dependencies = contents.scan(@dependency_expression).flatten
+
+      if @globals && !@globals.empty?
+        @globals.each do |global, dependency|
+          dependencies << dependency if contents.scan(/\b#{global}\./)
+        end
+      end
+
+      dependencies.compact
     end
 
     def get_descriptor(class_name)
