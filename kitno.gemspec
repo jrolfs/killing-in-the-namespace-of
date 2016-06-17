@@ -12,8 +12,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Jamie Rolfs', 'Alan Wong', 'Cassandra Cruz']
   spec.email         = ['jamie.rolfs@gmail.com', 'alan@mavenlink.com', 'celkamada@gmail.com']
 
-  spec.summary       = 'Convert projects that use JavaScript namespace module structures to CommonJS'
-  spec.description   = ''
+  spec.summary       = 'Killing In The Namespace Of'
+  spec.description   = 'Convert projects that use JavaScript namespace module structures to CommonJS'
   spec.homepage      = 'https://github.com/jrolfs/killing-in-the-namespace-of'
   spec.license       = 'MIT'
 
