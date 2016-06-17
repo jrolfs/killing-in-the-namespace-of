@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby -U
+
+require 'kitno'
+
+Kitno::CLI.start(ARGV)
