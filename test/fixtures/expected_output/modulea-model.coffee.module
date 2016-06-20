@@ -1,0 +1,5 @@
+Brainstem = require('brainstem')
+
+class ModuleA.Model extends Brainstem.Model
+
+module.exports = ModuleA.Model

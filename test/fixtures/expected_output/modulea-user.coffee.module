@@ -1,0 +1,8 @@
+Model = require('./modulea-model')
+
+_ = require('underscore')
+
+class ModuleA.User extends Model
+
+  initialize: (options)->
+    @config = _.merge({name: "Charles"}, options)
