@@ -11,12 +11,14 @@ module Kitno
     REQUIRE_TEMPLATE = "%{short_name} = require('%{path}')"
 
     def initialize(options = {})
-      @namespace, @directory, globals = options.values_at(:namespace, :directory, :globals)
+      @namespace, @directory, globals, externals = options.values_at(:namespace, :directory, :globals, :externals)
 
       @class_map = {}
       @files = []
 
-      parse_globals(globals) if globals && globals.length > 0
+      @globals = parse_mappings(globals) if globals && globals.length > 0
+
+      @externals = parse_mappings(externals) if externals && externals.length > 0
 
       @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
     end
@@ -66,10 +68,8 @@ module Kitno
       end
     end
 
-    def parse_globals(global_mappings)
-      mappings = global_mappings.split(',')
-
-      @globals = mappings.reduce({}) do |map, mapping|
+    def parse_mappings(mappings)
+      mappings.split(',').reduce({}) do |map, mapping|
         constructor, dependency = mapping.split(':')
         map[constructor] = dependency
         map
@@ -87,7 +87,13 @@ module Kitno
 
       if @globals && !@globals.empty?
         @globals.each do |global, dependency|
-          dependencies << dependency if contents.scan(/\b#{global}\./)
+          dependencies << dependency if contents.scan(/\b#{Regexp.escape(global)}\./).length > 0
+        end
+      end
+
+      if @externals && !@externals.empty?
+        @externals.each do |external, dependency|
+          dependencies << dependency if contents.scan(/\b#{Regexp.escape(external)}\./).length > 0
         end
       end
 

@@ -12,6 +12,10 @@ module Kitno
       A comma separated list of global methods in the form of `global:dependency`.
       Example: '_:underscore,$:jquery'
     GLOBALS
+    option :externals, aliases: '-e', type: :string, desc: <<-EXTERNALS
+      A comma separated list of external dependencies in the form of `constructor:dependency`.
+      Example: 'Module.Dependency:module#Dependency,Module.Foo.Dependency:module/foo#Dependency'
+    EXTERNALS
     def enumerate
       KillingInTheNamespaceOf.new(options).enumerate
     end
