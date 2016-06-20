@@ -9,7 +9,7 @@ class KitnoTest < Minitest::Test
     kitno = ::Kitno::KillingInTheNamespaceOf.new(
       namespace: 'RootNamespace',
       directory: 'test/fixtures',
-      globals: '',
+      globals: '_:underscore',
       externals: 'Brainstem:brainstem'
     )
 
@@ -24,6 +24,7 @@ class KitnoTest < Minitest::Test
         class_name: 'RootNamespace.Models.User',
         dependencies: [
           'RootNamespace.Models.Base',
+          'underscore'
         ]
       }
     }
