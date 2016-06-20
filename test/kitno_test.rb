@@ -13,8 +13,6 @@ class KitnoTest < Minitest::Test
       externals: 'Brainstem:brainstem'
     )
 
-    kitno.enumerate()
-
     expected = {
       'test/fixtures/models/modulea-model.coffee' => {
         path: 'test/fixtures/models/modulea-model.coffee',
@@ -27,8 +25,9 @@ class KitnoTest < Minitest::Test
         dependencies: ['ModuleA.Models.Base']
       }
     }
+    actual = nil
 
-    actual = kitno.class_map
+    assert_silent { actual = kitno.enumerate }
     assert_equal expected, actual, 'The class map generated was incorrect'
   end
 end

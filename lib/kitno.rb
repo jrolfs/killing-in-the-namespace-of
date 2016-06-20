@@ -36,6 +36,8 @@ module Kitno
 
     def enumerate
       enumerate_files
+
+      @class_map
     end
 
     private
