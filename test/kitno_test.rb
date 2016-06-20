@@ -5,7 +5,7 @@ class KitnoTest < Minitest::Test
     refute_nil ::Kitno::VERSION
   end
 
-  def test_it_properly_maps_dependencies_on_a_dry_run
+  def test_it_properly_maps_dependencies_on_enumeration
     kitno = ::Kitno::KillingInTheNamespaceOf.new(
       namespace: 'RootNamespace',
       directory: 'test/fixtures',
