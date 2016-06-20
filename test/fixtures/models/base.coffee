@@ -1,1 +1,1 @@
-class ModuleA.Models.Base extends Brainstem.Model
+class RootNamespace.Models.Base extends Brainstem.Model

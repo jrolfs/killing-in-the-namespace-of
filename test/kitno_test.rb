@@ -7,22 +7,24 @@ class KitnoTest < Minitest::Test
 
   def test_it_properly_maps_dependencies_on_a_dry_run
     kitno = ::Kitno::KillingInTheNamespaceOf.new(
-      namespace: 'ModuleA',
+      namespace: 'RootNamespace',
       directory: 'test/fixtures',
       globals: '',
       externals: 'Brainstem:brainstem'
     )
 
     expected = {
-      'test/fixtures/models/modulea-model.coffee' => {
-        path: 'test/fixtures/models/modulea-model.coffee',
-        class_name: 'ModuleA.Models.Base',
+      'test/fixtures/models/base.coffee' => {
+        path: 'test/fixtures/models/base.coffee',
+        class_name: 'RootNamespace.Models.Base',
         dependencies: ['brainstem']
       },
-      'test/fixtures/models/modulea-user.coffee' => {
-        path: 'test/fixtures/models/modulea-user.coffee',
-        class_name: 'ModuleA.Models.User',
-        dependencies: ['ModuleA.Models.Base']
+      'test/fixtures/models/user.coffee' => {
+        path: 'test/fixtures/models/user.coffee',
+        class_name: 'RootNamespace.Models.User',
+        dependencies: [
+          'RootNamespace.Models.Base',
+        ]
       }
     }
     actual = nil
