@@ -1,0 +1,10 @@
+_ = require('underscore')
+
+Base = require('./base')
+
+class User extends Base
+
+  initialize: (options)->
+    @config = _.merge({ name: 'Charles' }, options)
+
+module.exports = User
