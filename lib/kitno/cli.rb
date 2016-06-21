@@ -1,4 +1,5 @@
 require 'thor'
+require 'awesome_print'
 
 module Kitno
   class CLI < Thor
@@ -17,7 +18,7 @@ module Kitno
       Example: 'Module.Dependency:module#Dependency,Module.Foo.Dependency:module/foo#Dependency'
     EXTERNALS
     def enumerate
-      KillingInTheNamespaceOf.new(options).enumerate
+      ap KillingInTheNamespaceOf.new(options).enumerate
     end
   end
 end

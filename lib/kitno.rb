@@ -3,7 +3,6 @@ require 'kitno/cli'
 
 require 'find'
 require 'fileutils'
-require 'awesome_print'
 
 module Kitno
   class KillingInTheNamespaceOf
@@ -38,7 +37,7 @@ module Kitno
     def enumerate
       enumerate_files
 
-      ap @class_map
+      @class_map
     end
 
     private
@@ -83,21 +82,25 @@ module Kitno
     end
 
     def parse_dependencies(contents)
-      dependencies = contents.scan(@dependency_expression).flatten
+      dependencies = []
 
       if @globals && !@globals.empty?
         @globals.each do |global, dependency|
-          dependencies << dependency if contents.scan(/\b#{Regexp.escape(global)}\./).length > 0
+          dependencies << dependency if contents.scan(get_dependency_expression(global)).length > 0
         end
       end
 
       if @externals && !@externals.empty?
         @externals.each do |external, dependency|
-          dependencies << dependency if contents.scan(/\b#{Regexp.escape(external)}\./).length > 0
+          dependencies << dependency if contents.scan(get_dependency_expression(external)).length > 0
         end
       end
 
-      dependencies.compact
+      (dependencies += contents.scan(@dependency_expression).flatten).compact
+    end
+
+    def get_dependency_expression(search)
+      /[\s\(](#{Regexp.escape(search)}[\.\(])|^_[\.\(]/
     end
 
     def get_descriptor(class_name)

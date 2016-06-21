@@ -1,0 +1,7 @@
+Brainstem = require('brainstem')
+
+class Base extends Brainstem.Model
+  initialize: (options = {}) ->
+    @$target = options.$target
+
+module.exports = Base

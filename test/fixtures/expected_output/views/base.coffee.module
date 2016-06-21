@@ -1,0 +1,8 @@
+Backbone = require('backbone')
+
+class Base extends Backbone.View
+  render: ->
+    @$foo = @$('.foo')
+    super
+
+module.exports = Base
