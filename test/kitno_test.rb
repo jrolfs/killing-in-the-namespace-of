@@ -10,7 +10,7 @@ class KitnoTest < Minitest::Test
       namespace: 'RootNamespace',
       directory: 'test/fixtures',
       globals: '_:underscore,$:jquery',
-      externals: 'Brainstem:brainstem'
+      externals: 'Backbone:backbone,Brainstem:brainstem'
     )
 
     expected = {
@@ -31,7 +31,7 @@ class KitnoTest < Minitest::Test
       'test/fixtures/views/base.coffee' => {
         path: 'test/fixtures/views/base.coffee',
         class_name: 'RootNamespace.Views.Base',
-        dependencies: []
+        dependencies: ['backbone']
       },
       'test/fixtures/views/feature/main.coffee' => {
         path: 'test/fixtures/views/feature/main.coffee',

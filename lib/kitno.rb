@@ -100,7 +100,7 @@ module Kitno
     end
 
     def get_dependency_expression(search)
-      /[\W\b](#{Regexp.escape(search)}[\.\(])|^_[\.\(]/
+      /[\s\(](#{Regexp.escape(search)}[\.\(])|^_[\.\(]/
     end
 
     def get_descriptor(class_name)

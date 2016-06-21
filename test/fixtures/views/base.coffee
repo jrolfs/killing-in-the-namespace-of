@@ -1,1 +1,4 @@
-class RootNamespace.Views.Base
+class RootNamespace.Views.Base extends Backbone.View
+  render: ->
+    @$foo = @$('.foo')
+    super

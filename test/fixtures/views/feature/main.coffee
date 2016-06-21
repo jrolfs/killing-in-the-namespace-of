@@ -4,4 +4,4 @@ class RootNamespace.Views.Feature.Main extends RootNamespace.Views.Base
     super
 
   render: ->
-    @$thing = @$('.thing')
+    @$thing = $('.thing')
