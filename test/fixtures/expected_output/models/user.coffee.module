@@ -1,10 +1,11 @@
 _ = require('underscore')
+$ = require('jquery')
 
 Base = require('./base')
 
 class User extends Base
-
-  initialize: (options)->
+  initialize: (options) ->
+    @foo = $.merge(true, { bar: 'baz' }, options.foo)
     @config = _.merge({ name: 'Charles' }, options)
 
 module.exports = User

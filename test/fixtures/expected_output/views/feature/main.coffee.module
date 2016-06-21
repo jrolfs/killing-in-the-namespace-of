@@ -1,0 +1,14 @@
+$ = require('jquery')
+
+Base = require('../base')
+User = require('../../models/user')
+
+class Main extends Base
+  constructor: (options = {}) ->
+    @model ||= new User(name: options.name)
+    super
+
+  render: ->
+    @$thing = $('.thing')
+
+module.exports = Main
