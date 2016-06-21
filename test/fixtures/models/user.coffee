@@ -1,4 +1,4 @@
 class RootNamespace.Models.User extends RootNamespace.Models.Base
-
-  initialize: (options)->
-    @config = _.merge({ name: "Charles" }, options)
+  initialize: (options = {}) ->
+    @foo = $.merge(true, { bar: 'baz' }, options.foo)
+    @config = _.merge({ name: 'Charles' }, options)

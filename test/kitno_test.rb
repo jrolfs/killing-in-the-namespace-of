@@ -9,7 +9,7 @@ class KitnoTest < Minitest::Test
     kitno = ::Kitno::KillingInTheNamespaceOf.new(
       namespace: 'RootNamespace',
       directory: 'test/fixtures',
-      globals: '_:underscore',
+      globals: '_:underscore,$:jquery',
       externals: 'Brainstem:brainstem'
     )
 
@@ -23,10 +23,26 @@ class KitnoTest < Minitest::Test
         path: 'test/fixtures/models/user.coffee',
         class_name: 'RootNamespace.Models.User',
         dependencies: [
-          'RootNamespace.Models.Base',
-          'underscore'
+          'underscore',
+          'jquery',
+          'RootNamespace.Models.Base'
+        ]
+      },
+      'test/fixtures/views/base.coffee' => {
+        path: 'test/fixtures/views/base.coffee',
+        class_name: 'RootNamespace.Views.Base',
+        dependencies: []
+      },
+      'test/fixtures/views/feature/main.coffee' => {
+        path: 'test/fixtures/views/feature/main.coffee',
+        class_name: 'RootNamespace.Views.Feature.Main',
+        dependencies: [
+          'jquery',
+          'RootNamespace.Views.Base',
+          'RootNamespace.Models.User'
         ]
       }
+
     }
     actual = nil
 

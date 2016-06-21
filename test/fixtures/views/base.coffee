@@ -1,0 +1,1 @@
+class RootNamespace.Views.Base
