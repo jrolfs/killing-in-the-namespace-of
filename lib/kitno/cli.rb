@@ -3,12 +3,14 @@ require 'awesome_print'
 
 module Kitno
   class CLI < Thor
-    desc 'enumerate', 'Enumrate files that will be transformed'
-    long_desc <<-ENUMERATE
-    ENUMERATE
+    desc 'transform', 'Transform directory of modules from namespace convention to CommonJS modules'
+    long_desc <<-TRANSFORM
+    TRANSFORM
 
+    option :dry, aliases: '-d', type: :boolean, default: false
     option :namespace, aliases: '-n', type: :string, required: true, desc: 'Base namespace to migrate from'
     option :directory, aliases: '-d', type: :string, default: '.', desc: 'Directory to target for transformation'
+    option :output, aliases: '-o', type: :string, default: './output', desc: 'Directory to output transformed modules'
     option :globals, aliases: '-g', type: :string, desc: <<-GLOBALS
       A comma separated list of global methods in the form of `global:dependency`.
       Example: '_:underscore,$:jquery'
@@ -17,8 +19,14 @@ module Kitno
       A comma separated list of external dependencies in the form of `constructor:dependency`.
       Example: 'Module.Dependency:module#Dependency,Module.Foo.Dependency:module/foo#Dependency'
     EXTERNALS
-    def enumerate
-      ap KillingInTheNamespaceOf.new(options).enumerate
+    def transform
+      kitno = KillingInTheNamespaceOf.new(options)
+
+      if options[:dry]
+        ap kitno.enumerate
+      else
+        kitno.run
+      end
     end
   end
 end
