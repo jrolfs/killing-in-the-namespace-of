@@ -38,13 +38,13 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.12)
-  byebug (~> 9.0.5)
+  byebug (~> 9.0, >= 0.0.5)
   gem-release (~> 0.7.4)
   kitno!
   minitest (~> 5.0)
-  minitest-reporters (~> 1.1.9)
+  minitest-reporters (~> 1.1, >= 1.1.9)
   pry (~> 0.10.3)
-  pry-byebug (~> 3.4.0)
+  pry-byebug (~> 3.4, >= 3.4.0)
   rake (~> 10.0)
 
 BUNDLED WITH

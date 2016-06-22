@@ -10,13 +10,18 @@ module Kitno
     REQUIRE_TEMPLATE = "%{short_name} = require('%{path}')"
 
     def initialize(options = {})
-      @namespace, @directory, globals, externals = options.values_at(:namespace, :directory, :globals, :externals)
+      @namespace, @directory, @output, globals, externals = options.values_at(
+        :namespace,
+        :directory,
+        :output,
+        :globals,
+        :externals
+      )
 
       @class_map = {}
       @files = []
 
       @globals = parse_mappings(globals) if globals && globals.length > 0
-
       @externals = parse_mappings(externals) if externals && externals.length > 0
 
       @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
@@ -26,11 +31,16 @@ module Kitno
       enumerate_files
 
       @class_map.each_value do |descriptor|
-        path = descriptor[:path]
+        path, output_path = descriptor[:path]
 
         require_dependencies!(path, descriptor[:dependencies])
 
-        FileUtils.mv "#{path}.module", path
+        if @output
+          output_path = Pathname.new(path).sub(@directory, @output)
+          FileUtils.mkdir_p output_path.dirname.to_s
+        end
+
+        FileUtils.mv "#{path}.module", output_path.to_s
       end
     end
 
@@ -125,15 +135,24 @@ module Kitno
       return relative_path, short_name
     end
 
+    def is_external_or_global(dependency)
+      @globals.values.include?(dependency) || @externals.values.include?(dependency)
+    end
+
     def require_dependencies!(filename, dependencies)
       File.open("#{filename}.module", 'w') do |file|
         dependencies.each do |dependency|
-          relative_path, short_name = get_module_mappings(filename, get_descriptor(dependency))
+          if is_external_or_global(dependency)
+            path = dependency
+            short_name = @globals.invert[dependency] || @externals.invert[dependency]
+          else
+            path, short_name = get_module_mappings(filename, get_descriptor(dependency))
+          end
 
-          file.puts REQUIRE_TEMPLATE % { short_name: short_name, path: relative_path }
+          file.puts REQUIRE_TEMPLATE % { short_name: short_name, path: path }
         end
 
-        file.puts "\n\n"
+        file.puts "\n"
 
         short_class_name = @class_map[filename][:class_name].split('.').last
 
@@ -141,9 +160,11 @@ module Kitno
           line.gsub!(CLASS_EXPRESSION, "class #{short_class_name}")
 
           dependencies.each do |dependency|
+            next if is_external_or_global(dependency)
+
             descriptor = get_descriptor(dependency)
             class_name = descriptor[:class_name]
-            relative_path, short_name = get_module_mappings(filename, descriptor)
+            _, short_name = get_module_mappings(filename, descriptor)
 
             line.gsub!(class_name, short_name)
           end
