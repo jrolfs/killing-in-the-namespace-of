@@ -14,7 +14,7 @@ JavaScript modules to CommonJS modules.
 *Note: this is currently a work in progress*
 
 ```shell
-  $ kitno enumerate --namespace='MyApp' --directory='./src'
+  $ kitno transform --namespace='MyApp' --directory='./src' --output='./common-js' --globals='_:underscore,$:jquery' --externals='Backbone:backbone'
 ```
 
 ## License
