@@ -3,6 +3,9 @@
 A command line utility to aid in the conversion from "namespace" based
 JavaScript modules to CommonJS modules.
 
+[![build status](https://img.shields.io/travis/mavenlink/killing-in-the-namespace-of.svg?style=flat-square)](https://travis-ci.org/mavenlink/killing-in-the-namespace-of)
+[![gem](https://img.shields.io/gem/v/kitno.svg?style=flat-square)](https://rubygems.org/gems/kitno)
+
 ## Installation
 
 ```shell
