@@ -13,7 +13,7 @@ class KitnoTest < Minitest::Test
     @kitno = ::Kitno::KillingInTheNamespaceOf.new(@options)
   end
 
-  def test_that_it_has_a_version_number
+  def test_it_has_a_version_number
     refute_nil ::Kitno::VERSION
   end
 
