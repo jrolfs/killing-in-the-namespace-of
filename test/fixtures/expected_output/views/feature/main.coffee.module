@@ -1,5 +1,4 @@
 $ = require('jquery')
-
 Base = require('../base')
 User = require('../../models/user')
 

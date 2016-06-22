@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'fileutils'
 
 class KitnoTest < Minitest::Test
   def setup
@@ -53,5 +54,20 @@ class KitnoTest < Minitest::Test
 
     assert_silent { actual = @kitno.enumerate }
     assert_equal expected, actual, 'The class map generated was incorrect'
+  end
+
+  def test_it_properly_writes_dependencies_on_run
+    FileUtils.rmtree('test/fixtures/output')
+
+    @kitno.run
+
+    Find.find('test/fixtures/expected_output') do |path|
+      next if FileTest.directory?(path)
+
+      expected = File.open(path, 'rb').read
+      actual = File.open(Pathname.new(path).sub('expected_output', 'output').sub('.module', ''), 'rb').read
+
+      assert_equal expected, actual, 'The outputted module content was incorrect'
+    end
   end
 end
