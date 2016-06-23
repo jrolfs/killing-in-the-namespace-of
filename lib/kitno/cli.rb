@@ -7,7 +7,7 @@ module Kitno
     long_desc <<-TRANSFORM
     TRANSFORM
 
-    option :dry, aliases: '-d', type: :boolean, default: false
+    option :dry, type: :boolean, default: false
     option :namespace, aliases: '-n', type: :string, required: true, desc: 'Base namespace to migrate from'
     option :directory, aliases: '-d', type: :string, default: '.', desc: 'Directory to target for transformation'
     option :output, aliases: '-o', type: :string, default: './output', desc: 'Directory to output transformed modules'
