@@ -21,10 +21,10 @@ module Kitno
       @class_map = {}
       @files = []
 
-      @globals = parse_mappings(globals) if globals && globals.length > 0
-      @externals = parse_mappings(externals) if externals && externals.length > 0
+      @globals = globals && globals.length > 0 ? parse_mappings(globals) : {}
+      @externals = externals && externals.length > 0 ? parse_mappings(externals) : {}
 
-      @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
+      @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends|=|\:)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
     end
 
     def run
@@ -67,7 +67,7 @@ module Kitno
         class_name = parse_class_name contents
         dependencies = parse_dependencies contents
 
-        unless class_name.nil?
+        unless class_name.nil? && dependencies.nil?
           @class_map[path] = {
             path: path,
             class_name: class_name,
@@ -106,7 +106,7 @@ module Kitno
         end
       end
 
-      (dependencies += contents.scan(@dependency_expression).flatten).compact
+      dependencies += contents.scan(@dependency_expression).flatten.uniq.compact
     end
 
     def get_dependency_expression(search)
@@ -145,6 +145,8 @@ module Kitno
           if is_external_or_global(dependency)
             path = dependency
             short_name = @globals.invert[dependency] || @externals.invert[dependency]
+          elsif get_descriptor(dependency).nil?
+            next
           else
             path, short_name = get_module_mappings(filename, get_descriptor(dependency))
           end
@@ -154,7 +156,7 @@ module Kitno
 
         file.puts "\n"
 
-        short_class_name = @class_map[filename][:class_name].split('.').last
+        short_class_name = @class_map[filename][:class_name]&.split('.')&.last
 
         File.foreach(filename) do |line|
           line.gsub!(CLASS_EXPRESSION, "class #{short_class_name}")
@@ -172,7 +174,7 @@ module Kitno
           file.puts line
         end
 
-        file.puts "\nmodule.exports = #{short_class_name}\n"
+        file.puts "\nmodule.exports = #{short_class_name}\n" if !short_class_name.nil?
       end
     end
   end
