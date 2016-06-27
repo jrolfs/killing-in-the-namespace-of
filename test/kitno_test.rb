@@ -20,6 +20,14 @@ class KitnoTest < Minitest::Test
 
   def test_it_properly_maps_dependencies_on_dry_run
     expected = {
+      'test/fixtures/input/collections/users.coffee' => {
+        path: 'test/fixtures/input/collections/users.coffee',
+        class_name: 'RootNamespace.Collections.Users',
+        dependencies: [
+          'backbone',
+          'RootNamespace.Models.User'
+        ]
+      },
       'test/fixtures/input/models/base.coffee' => {
         path: 'test/fixtures/input/models/base.coffee',
         class_name: 'RootNamespace.Models.Base',

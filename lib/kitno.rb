@@ -25,7 +25,7 @@ module Kitno
       @globals = globals && globals.length > 0 ? parse_mappings(globals) : {}
       @externals = externals && externals.length > 0 ? parse_mappings(externals) : {}
 
-      @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends|=)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
+      @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends|=|\:)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
     end
 
     def run
