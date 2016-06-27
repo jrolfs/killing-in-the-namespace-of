@@ -42,6 +42,11 @@ class KitnoTest < Minitest::Test
           'RootNamespace.Models.Base'
         ]
       },
+      'test/fixtures/input/specs/user-spec.coffee' => {
+        path: 'test/fixtures/input/specs/user-spec.coffee',
+        class_name: nil,
+        dependencies: ['RootNamespace.Models.User']
+      },
       'test/fixtures/input/views/base.coffee' => {
         path: 'test/fixtures/input/views/base.coffee',
         class_name: 'RootNamespace.Views.Base',
