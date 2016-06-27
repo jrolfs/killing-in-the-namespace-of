@@ -5,9 +5,11 @@ User = require('../../models/user')
 class Main extends Base
   constructor: (options = {}) ->
     @model ||= new User(name: options.name)
+    @friend = new User(name: options.friend.name)
     super
 
   render: ->
     @$thing = $('.thing')
+    @$other = $('.other')
 
 module.exports = Main

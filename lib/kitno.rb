@@ -106,7 +106,7 @@ module Kitno
         end
       end
 
-      (dependencies += contents.scan(@dependency_expression).flatten.uniq.compact)
+      dependencies += contents.scan(@dependency_expression).flatten.uniq.compact
     end
 
     def get_dependency_expression(search)
