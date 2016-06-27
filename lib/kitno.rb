@@ -3,6 +3,7 @@ require 'kitno/cli'
 
 require 'find'
 require 'fileutils'
+require 'pathname'
 
 module Kitno
   class KillingInTheNamespaceOf
