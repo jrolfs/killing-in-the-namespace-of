@@ -22,7 +22,7 @@ module Kitno
       @class_map = {}
       @files = []
 
-      @globals =  globals && globals.length > 0 ? parse_mappings(globals) : {}
+      @globals = globals && globals.length > 0 ? parse_mappings(globals) : {}
       @externals = externals && externals.length > 0 ? parse_mappings(externals) : {}
 
       @dependency_expression = /^(?!(\s\*|#)).*(?:new|extends|=)\s(#{Regexp.escape(@namespace)}[\w\.]*)/
@@ -41,7 +41,7 @@ module Kitno
           FileUtils.mkdir_p output_path.dirname.to_s
         end
 
-        FileUtils.mv "#{path}.module", output_path.to_s, verbose: true
+        FileUtils.mv "#{path}.module", output_path.to_s
       end
     end
 
@@ -123,7 +123,6 @@ module Kitno
     end
 
     def get_module_mappings(filename, descriptor)
-      binding.pry if descriptor[:class_name].nil?
       path = descriptor[:path]
       class_name = descriptor[:class_name]
       short_name = class_name.split('.').last
@@ -142,7 +141,6 @@ module Kitno
     end
 
     def require_dependencies!(filename, dependencies)
-      puts filename
       File.open("#{filename}.module", 'w') do |file|
         dependencies.each do |dependency|
           if is_external_or_global(dependency)
