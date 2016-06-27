@@ -1,6 +1,5 @@
 require 'kitno/version'
 require 'kitno/cli'
-require 'pry'
 
 require 'find'
 require 'fileutils'
