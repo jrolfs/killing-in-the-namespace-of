@@ -163,7 +163,7 @@ module Kitno
           line.gsub!(CLASS_EXPRESSION, "class #{short_class_name}")
 
           dependencies.each do |dependency|
-            next if is_external_or_global(dependency)
+            next if is_external_or_global(dependency) || get_descriptor(dependency).nil?
 
             descriptor = get_descriptor(dependency)
             class_name = descriptor[:class_name]
